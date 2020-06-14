@@ -923,6 +923,9 @@ int _glfwPlatformCreateWindow(_GLFWwindow* window,
             if (!_glfwCreateContextOSMesa(window, ctxconfig, fbconfig))
                 return GLFW_FALSE;
         }
+    } else {
+        [window->ns.view setWantsLayer:YES];
+        window->ns.layer = [window->ns.view layer];
     }
 
     if (window->monitor)
@@ -1842,6 +1845,6 @@ GLFWAPI id glfwGetCocoaWindow(GLFWwindow* handle)
 {
     _GLFWwindow* window = (_GLFWwindow*) handle;
     _GLFW_REQUIRE_INIT_OR_RETURN(nil);
-    return window->ns.object;
+    return window->ns.layer;
 }
 
